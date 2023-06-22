@@ -10,7 +10,7 @@ import jwt
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "my-secret-key"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/food_db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Sapat1925@192.168.0.103:3309/food_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Sapat1925@3.6.126.210:3309/food_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
@@ -46,7 +46,7 @@ def create_food():
         auth_header = request.headers.get('Authorization')
         bearer_token = auth_header.split()[1]
     except:
-        return jsonify({"error": "Token missing, Please login again get"})
+        return jsonify({"error": "Token missing, Please login again foodapp.craete"})
         # data_dict = json.loads(data)
     isvalid = jwt.decode(bearer_token, app.config['SECRET_KEY'], algorithms=["HS256"])
     if 'client_id' in isvalid:
@@ -73,7 +73,7 @@ def get_food():
         auth_header = request.headers.get('Authorization')
         bearer_token = auth_header.split()[1]
     except:
-        return jsonify({"error": "Token missing, Please login again get"})
+        return jsonify({"error": "Token missing, Please login again foodapp.get"})
         # data_dict = json.loads(data)
     isvalid = jwt.decode(bearer_token, app.config['SECRET_KEY'], algorithms=["HS256"])
     if 'client_id' in isvalid:
@@ -90,7 +90,7 @@ def get_food():
             # print("final :", final_result)
             return json.dumps(final_result)
     else:
-        return jsonify({"error": "Token missing, Please login again get"})
+        return jsonify({"error": "Token invalid, Please login again foodapp.get"})
 
     # Make a GET request to App B's /hello endpoint
     # bearer_token =
