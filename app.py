@@ -36,7 +36,7 @@ db.create_all()
 @app.route("/")
 def hello():
     # Return a greeting message
-    return jsonify({"message": "Hello from Food APP!"})
+    return jsonify({"message": "Hello from Food App! Welcome to demo"})
 
 
 # Define a resource for the /call_app_b endpoint
@@ -73,7 +73,7 @@ def get_food():
         auth_header = request.headers.get('Authorization')
         bearer_token = auth_header.split()[1]
     except:
-        return jsonify({"error": "Token missing, Please login again foodapp.food/get"})
+        return jsonify({"error": "Token missing, Please login again get"})
         # data_dict = json.loads(data)
     isvalid = jwt.decode(bearer_token, app.config['SECRET_KEY'], algorithms=["HS256"])
     if 'client_id' in isvalid:
@@ -90,7 +90,7 @@ def get_food():
             # print("final :", final_result)
             return json.dumps(final_result)
     else:
-        return jsonify({"error": "client id missing Token invalid, Please login again foodapp.food/get"})
+        return jsonify({"error": "Token missing, Please login again get"})
 
     # Make a GET request to App B's /hello endpoint
     # bearer_token =
@@ -150,4 +150,4 @@ def get_order_food(fid):
 
 # Run the app
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True)
