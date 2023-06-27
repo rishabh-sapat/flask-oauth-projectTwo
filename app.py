@@ -1,11 +1,9 @@
 # Import Flask, jsonify, and requests
-
-import urllib
-from flask import Flask, jsonify, request, redirect, session
-import requests, json
-from flask_sqlalchemy import SQLAlchemy
+from urllib.parse import urlparse, parse_qs
+import json
 import jwt
-
+from flask import Flask, jsonify, request, session
+from flask_sqlalchemy import SQLAlchemy
 # Create a Flask app and an API with Connexion
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "my-secret-key"
@@ -36,7 +34,7 @@ db.create_all()
 @app.route("/")
 def hello():
     # Return a greeting message
-    return jsonify({"message": "Hello from Food App! Welcome to demo"})
+    return jsonify({"message": "Hello!! Welcome to Food App! Food Service is Working."})
 
 
 # Define a resource for the /call_app_b endpoint
@@ -112,13 +110,37 @@ def create_food():
         else:
             final_result = []
             for f in result:
-                food_dict = {'foodid': f.id, 'foodname': f.name, 'fooddetail': f.detail, 'foodprice': f.price}
+                food_dict = {'food_id': f.id, 'food_name': f.name, 'food_detail': f.detail, 'food_price': f.price}
                 # add that dict every time inside final list
                 final_result.append(food_dict)
             # print("final :", final_result)
             return json.dumps(final_result)
     else:
         return jsonify({"error": "Token missing, Please login again foodapp.food/create"})
+
+        # try:
+        #
+        #     food_dict = request.args.get('food_dict')
+        #     food_name = request.args.get('food_name')
+        #     food_detail = request.args.get('food_detail')
+        #     food_price = request.args.get('food_price')
+        #     print(food_dict)
+        #     return food_dict
+        # except:
+        #     return "food_dict not available"
+    #     result = Food.query.all()
+    #     if not result:
+    #         return json.dumps({"ERROR": "No Food Details...!"})
+    #     else:
+    #         final_result = []
+    #         for f in result:
+    #             food_dict = {'food_id': f.id, 'food_name': f.name, 'food_detail': f.detail, 'food_price': f.price}
+    #             # add that dict every time inside final list
+    #             final_result.append(food_dict)
+    #         # print("final :", final_result)
+    #         return json.dumps(final_result)
+    # else:
+    #     return jsonify({"error": "Token missing, Please login again foodapp.food/create"})
 
     # Make a GET request to App B's /hello endpoint
     # bearer_token =
